@@ -1,4 +1,5 @@
 var convnetjs = require('./node_modules/convnetjs');
+var data = require('./carve_error_report_data.json')
 
 var layer_defs = [];
 // minimal network: a simple binary SVM classifer in 2-dimensional space
@@ -15,7 +16,9 @@ var trainer = new convnetjs.Trainer(net, {
   l2_decay: 0.001,
   batch_size: 10
 });
- 
+
+console.log("data", data)
+
 // create a 1x1x2 volume of input activations:
 var x = new convnetjs.Vol(1,1,2);
 x.w[0] = 0.5; // w is the field holding the actual data
