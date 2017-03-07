@@ -17,8 +17,7 @@ var trainer = new convnetjs.Trainer(net, {
   batch_size: 10
 });
 
-training_data = [];
-
+// ~750 records indicating failure
 data.forEach((collection, index) => {
   var x = new convnetjs.Vol(1,1,4, 0.0)
 
@@ -26,7 +25,6 @@ data.forEach((collection, index) => {
     x.w[index] = dataPoint
   })
   console.log("x", x)
-  training_data.push(x)
 
   // class 0 for failure
   trainer.train(x, 0)
