@@ -1,9 +1,9 @@
 var convnetjs = require('./node_modules/convnetjs');
-var data = require('./carve_error_report_data2.json')
+var data = require('./carve_error_report_data3.json')
 
 var layer_defs = [];
 // minimal network: a simple binary SVM classifer in 2-dimensional space
-layer_defs.push({type:'input', out_sx:1, out_sy:1, out_depth:8});
+layer_defs.push({type:'input', out_sx:1, out_sy:1, out_depth:4});
 layer_defs.push({type:'svm', num_classes:2});
 
 // create a net
@@ -20,7 +20,7 @@ var trainer = new convnetjs.Trainer(net, {
 training_data = [];
 
 data.forEach((collection, index) => {
-  var x = new convnetjs.Vol(1,1,8, 0.0)
+  var x = new convnetjs.Vol(1,1,4, 0.0)
 
   collection.forEach((dataPoint, index) => {
     x.w[index] = dataPoint
@@ -28,21 +28,18 @@ data.forEach((collection, index) => {
   console.log("x", x)
   training_data.push(x)
 
+  // class 0 for failure
   trainer.train(x, 0)
 })
 
 passing_params = [
-  4,
   .125,
-  3,
-  .0625,
   60,
   .25,
   .4,
-  1
 ]
 
-testData = new convnetjs.Vol(1,1,8)
+testData = new convnetjs.Vol(1,1,4)
 passing_params.forEach((dataPoint, index) => {
   testData.w[index] = dataPoint
 })
